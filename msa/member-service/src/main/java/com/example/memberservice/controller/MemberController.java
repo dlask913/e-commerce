@@ -17,16 +17,35 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    @GetMapping(value = "member-service/members")
+    @GetMapping(value = "member-service/new")
     public String memberForm(Model model) {
         model.addAttribute("memberFormDto", new MemberFormDto());
         return "members/memberForm";
     }
 
-    @PostMapping(value = "member-service/members")
+    @PostMapping(value = "member-service/new")
     public String newMember(MemberFormDto memberFormDto, Model model) {
         Member member = Member.createMember(memberFormDto);
         memberService.saveMember(member);
+        return "redirect:/";
+    }
+
+    @GetMapping(value = "member-service/login")
+    public String loginMember(Model model) {
+        model.addAttribute("memberDto", new MemberFormDto());
+        return "members/memberLoginForm";
+    }
+
+    @PostMapping(value = "member-service/login")
+    public String loginMember(MemberFormDto memberFormDto,Model model) {
+        Member member = memberService.findByEmail(memberFormDto.getEmail());
+        if (member == null){
+            model.addAttribute("message", "없는 회원입니다.");
+            return "members/memberLoginError";
+        } else if (!member.getPwd().equals(memberFormDto.getPwd())) {
+            model.addAttribute("message", "잘못된 비밀번호입니다.");
+            return "members/memberLoginError";
+        }
         return "redirect:/";
     }
 }

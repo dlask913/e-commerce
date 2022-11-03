@@ -23,4 +23,10 @@ public class MemberService {
             throw new IllegalStateException("이미 가입된 회원입니다.");
         }
     }
+
+    public Member findByEmail(String email) {
+        Member findMember = memberRepository.findByEmail(email);
+        return findMember;
+    }
+
 }
