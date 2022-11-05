@@ -8,4 +8,6 @@ public interface OrderService {
     OrderDto getOrderByOrderId(String orderId);
     Iterable<Order> getOrdersByUserId(String userId);
 
+    Order saveOrder(Order order);
+
 }

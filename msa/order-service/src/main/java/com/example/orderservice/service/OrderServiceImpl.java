@@ -15,6 +15,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService{
 
+
     private final OrderRepository orderRepository;
 
     @Override
@@ -42,6 +43,11 @@ public class OrderServiceImpl implements OrderService{
     @Override
     public Iterable<Order> getOrdersByUserId(String userId) {
         return orderRepository.findByUserId(userId);
+    }
+
+    @Override
+    public Order saveOrder(Order order) {
+        return orderRepository.save(order);
     }
 
 }

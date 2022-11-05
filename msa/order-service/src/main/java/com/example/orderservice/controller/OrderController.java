@@ -62,4 +62,16 @@ public class OrderController {
         return "orders/orderList";
     }
 
+    @GetMapping("/{userId}/new")
+    public String orderForm(Model model) {
+        model.addAttribute("orderDto", new OrderDto());
+        return "orders/orderForm";
+    }
+
+    @PostMapping("/{userId}/new")
+    public String newOrder(OrderDto orderDto, Model model) {
+        Order order = Order.createOrder(orderDto);
+        orderService.saveOrder(order);
+        return "redirect:/";
+    }
 }

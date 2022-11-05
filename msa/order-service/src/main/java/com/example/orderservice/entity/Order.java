@@ -1,5 +1,6 @@
 package com.example.orderservice.entity;
 
+import com.example.orderservice.dto.OrderDto;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
@@ -7,6 +8,7 @@ import org.hibernate.annotations.ColumnDefault;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
 @Table(name = "orders")
@@ -35,4 +37,14 @@ public class Order implements Serializable {
     private Date createdAt;
 
 
+    public static Order createOrder(OrderDto orderDto) {
+        Order order = new Order();
+        order.setUserId(orderDto.getUserId());
+        order.setOrderId(UUID.randomUUID().toString());
+        order.setQty(orderDto.getQty());
+        order.setTotalPrice(orderDto.getTotalPrice());
+        order.setUnitPrice(orderDto.getUnitPrice());
+        order.setProductId(orderDto.getProductId());
+        return order;
+    }
 }
