@@ -18,14 +18,14 @@ public class MemberService {
     }
 
     private void validateDuplicateMember(Member member) {
-        Member findMember = memberRepository.findByEmail(member.getEmail());
+        Member findMember = memberRepository.findByUserId(member.getUserId());
         if (findMember != null) {
             throw new IllegalStateException("이미 가입된 회원입니다.");
         }
     }
 
-    public Member findByEmail(String email) {
-        Member findMember = memberRepository.findByEmail(email);
+    public Member findByUserId(String userId) {
+        Member findMember = memberRepository.findByUserId(userId);
         return findMember;
     }
 

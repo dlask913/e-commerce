@@ -32,9 +32,8 @@ public class Member {
 
     public static Member createMember(MemberFormDto memberFormDto) {
         Member member = new Member();
-        member.setUserId(UUID.randomUUID().toString());
+        member.setUserId(memberFormDto.getUserId());
         member.setName(memberFormDto.getName());
-        member.setEmail(memberFormDto.getEmail());
         member.setPwd(memberFormDto.getPwd());
         return member;
     }

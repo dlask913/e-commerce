@@ -38,7 +38,7 @@ public class MemberController {
 
     @PostMapping(value = "member-service/login")
     public String loginMember(MemberFormDto memberFormDto,Model model) {
-        Member member = memberService.findByEmail(memberFormDto.getEmail());
+        Member member = memberService.findByUserId(memberFormDto.getUserId());
         if (member == null){
             model.addAttribute("message", "없는 회원입니다.");
             return "members/memberLoginError";
