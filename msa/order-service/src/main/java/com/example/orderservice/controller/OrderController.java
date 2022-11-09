@@ -4,23 +4,23 @@ import com.example.orderservice.dto.OrderDto;
 import com.example.orderservice.entity.Order;
 import com.example.orderservice.service.OrderService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/order-service")
+@RequestMapping("/")
 @RequiredArgsConstructor
 public class OrderController {
     private final OrderService orderService;
+
 
 //    @PostMapping("/{userId}/orders")
 //    public ResponseEntity<ResponseOrder> createOrder(@PathVariable("userId") String userId,
@@ -49,9 +49,24 @@ public class OrderController {
 //        return ResponseEntity.status(HttpStatus.CREATED).body(responseOrder);
 //    }
 
-    @GetMapping("/{userId}/orders")
+    @GetMapping(value = "order-service/{userId}/new")
+    public String orderForm(@PathVariable("userId") String userId, Model model) {
+        OrderDto orderDto = new OrderDto();
+        orderDto.setUserId(userId);
+        model.addAttribute("orderDto", orderDto);
+        return "orders/orderForm";
+    }
+
+    @PostMapping(value = "order-service/{userId}/new")
+    public String newOrderForm(@PathVariable("userId") String userId, OrderDto orderDto) {
+        System.out.println("userId: "+userId);
+        Order order = Order.createOrder(orderDto);
+        orderService.saveOrder(order);
+        return "redirect:/order-service/{userId}/new";
+    }
+
+    @GetMapping(value = "order-service/{userId}/orders")
     public String getOrder(@PathVariable("userId") String userId, Model model) throws Exception{
-//        log.info("Before retrieve orders data");
         Iterable<Order> orderList = orderService.getOrdersByUserId(userId);
         List<Order> result = new ArrayList<>();
         orderList.forEach(v -> {
@@ -59,19 +74,5 @@ public class OrderController {
         });
         model.addAttribute("orderList", orderList);
         return "orders/orderList";
-    }
-
-    @GetMapping("/{userId}/new")
-    public String orderForm(Model model) {
-        model.addAttribute("orderDto", new OrderDto());
-        return "orders/orderForm";
-    }
-
-    @PostMapping("/{userId}/new")
-    public String newOrder(@PathVariable("userId") String userId, OrderDto orderDto, Model model) {
-        orderDto.setUserId(userId);
-        Order order = Order.createOrder(orderDto);
-        orderService.saveOrder(order);
-        return "redirect:/";
     }
 }

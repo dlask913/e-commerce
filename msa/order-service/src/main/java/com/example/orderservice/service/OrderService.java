@@ -1,13 +1,24 @@
 package com.example.orderservice.service;
 
-import com.example.orderservice.dto.OrderDto;
 import com.example.orderservice.entity.Order;
+import com.example.orderservice.repository.OrderRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-public interface OrderService {
-    OrderDto createOrder(OrderDto orderDto);
-    OrderDto getOrderByOrderId(String orderId);
-    Iterable<Order> getOrdersByUserId(String userId);
+@Service
+@Transactional
+@RequiredArgsConstructor
+public class OrderService{
 
-    Order saveOrder(Order order);
+    private final OrderRepository orderRepository;
+
+    public Iterable<Order> getOrdersByUserId(String userId) {
+        return orderRepository.findByUserId(userId);
+    }
+
+    public Order saveOrder(Order order) {
+        return orderRepository.save(order);
+    }
 
 }

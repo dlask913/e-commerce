@@ -1,24 +1,20 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
-<!--productId, qty, unitPrice, orderId, userId -->
 <div class="container">
-    <form action="/new" role="form" method="post" th:object="${orderDto}">
+    <!-- action url이랑 postmapping url이랑 달라서 postmapping호출 X 주의하자 -->
+    <form th:action="@{'/order-service/'+${orderDto.userId}+ '/new'}" role="form" method="post" th:object="${orderDto}">
         <div class="form-group">
             <label th:for="productId">상품ID</label>
             <input type="text" th:field="*{productId}" class="form-control" placeholder="상품ID 입력">
         </div>
         <div class="form-group">
             <label th:for="qty">수량</label>
-            <input type="text" th:field="*{qty}" class="form-control" placeholder="수량을 입력해주세요">
+            <input type="number" th:field="*{qty}" class="form-control" placeholder="수량을 입력해주세요">
         </div>
         <div class="form-group">
             <label th:for="unitPrice">가격</label>
-            <input type="text" th:field="*{unitPrice}" class="form-control" placeholder="가격을 입력해주세요">
+            <input type="number" th:field="*{unitPrice}" class="form-control" placeholder="가격을 입력해주세요">
         </div>
-<!--        <div class="form-group">-->
-<!--            <label th:for="userId">유저 ID 입력</label>-->
-<!--            <input type="text" th:field="*{userId}" class="form-control" placeholder="유저ID를 입력해주세요">-->
-<!--        </div>-->
         <button type="submit">주문하기</button>
     </form>
 </div>
