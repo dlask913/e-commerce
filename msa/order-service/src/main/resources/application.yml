@@ -22,14 +22,14 @@ spring:
     hibernate:
       ddl-auto: update
   datasource:
-    #    driver-class-name: org.h2.Driver
-    #    url: jdbc:h2:mem:testdb
-    url: jdbc:mariadb://localhost:3308/mydb # docker? ??? ? ?? ( 3308->3306
-    driver-class-name: org.mariadb.jdbc.Driver
-    username: root
-    password: test1357
-#      username: sa
-#      password:
+        driver-class-name: org.h2.Driver
+        url: jdbc:h2:mem:testdb
+#    url: jdbc:mariadb://localhost:3308/mydb # docker? ??? ? ?? ( 3308->3306
+#    driver-class-name: org.mariadb.jdbc.Driver
+#    username: root
+#    password: test1357
+        username: sa
+        password:
 eureka:
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}

@@ -1,9 +1,10 @@
 package com.example.orderservice.dto;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Data
 public class OrderDto {
     private String productId;
     private Integer qty;

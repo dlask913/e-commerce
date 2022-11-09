@@ -57,7 +57,6 @@ public class OrderController {
         orderList.forEach(v -> {
             result.add(new ModelMapper().map(v, Order.class));
         });
-
         model.addAttribute("orderList", orderList);
         return "orders/orderList";
     }
@@ -69,7 +68,8 @@ public class OrderController {
     }
 
     @PostMapping("/{userId}/new")
-    public String newOrder(OrderDto orderDto, Model model) {
+    public String newOrder(@PathVariable("userId") String userId, OrderDto orderDto, Model model) {
+        orderDto.setUserId(userId);
         Order order = Order.createOrder(orderDto);
         orderService.saveOrder(order);
         return "redirect:/";

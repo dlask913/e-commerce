@@ -27,6 +27,7 @@ public class MemberController {
     public String newMember(MemberFormDto memberFormDto, Model model) {
         Member member = Member.createMember(memberFormDto);
         memberService.saveMember(member);
+        System.out.println("Id출력 "+member.getId());
         return "redirect:/";
     }
 

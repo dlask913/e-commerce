@@ -20,8 +20,6 @@ public class Member {
     private Long id;
 
     @Column
-    private String email;
-    @Column
     private String name;
     @Column
     private String pwd;
@@ -35,6 +33,7 @@ public class Member {
         member.setUserId(memberFormDto.getUserId());
         member.setName(memberFormDto.getName());
         member.setPwd(memberFormDto.getPwd());
+        member.setCreatedAt(new Date());
         return member;
     }
 }
