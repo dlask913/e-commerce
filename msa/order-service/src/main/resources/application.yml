@@ -4,6 +4,12 @@ server:
 spring:
   application:
     name: order-service
+  zipkin:
+    base-url: http://127.0.0.1:9411
+    enabled: true
+  sleuth:
+    sampler:
+      probability: 1.0
   jpa:
     hibernate:
       ddl-auto: update
@@ -20,34 +26,6 @@ spring:
     password:
 
 
-#spring:
-#  application:
-#    name: order-service
-##  zipkin:
-##    base-url: http://127.0.0.1:9411
-##    enabled: true
-##  sleuth:
-##    sampler:
-##      probability: 1.0
-#  jpa:
-#    hibernate:
-#      ddl-auto: update
-#  h2:
-#    console:
-#      enabled: true
-#      settings:
-#        web-allow-others: true
-#      path: /h2-console
-#  datasource:
-#    driver-class-name: org.h2.Driver
-#    url: jdbc:h2:mem:testdb
-#    username: sa
-#    password:
-##    url: jdbc:mariadb://localhost:3308/mydb # docker? ??? ? ?? ( 3308->3306
-##    driver-class-name: org.mariadb.jdbc.Driver
-##    username: root
-##    password: test1357
-
 eureka:
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
@@ -63,8 +41,8 @@ eureka:
 #  level:
 #    com.example.orderservice: DEBUG
 
-#management:
-#  endpoints:
-#    web:
-#      exposure:
-#        include: health, httptrace, info, metrics, prometheus
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, httptrace, info, metrics, prometheus

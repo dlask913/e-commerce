@@ -10,5 +10,6 @@ public class OrderDto {
     private Integer qty;
     private Integer unitPrice;
     private String userId;
+    private Integer totalPrice;
 }
 

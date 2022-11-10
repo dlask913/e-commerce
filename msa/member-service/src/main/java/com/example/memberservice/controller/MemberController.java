@@ -1,14 +1,23 @@
 package com.example.memberservice.controller;
 
+import brave.Response;
 import com.example.memberservice.dto.MemberFormDto;
 import com.example.memberservice.entity.Member;
 import com.example.memberservice.service.MemberService;
+import com.example.memberservice.vo.ResponseOrder;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RequestMapping("/")
 @Controller
@@ -49,4 +58,18 @@ public class MemberController {
         }
         return "redirect:/";
     }
+
+    @GetMapping("member-service/{userId}")
+    public String getUser(@PathVariable("userId") String userId, Model model) {
+        MemberFormDto memberFormDto = memberService.getUserByUserId(userId);
+        Iterable<ResponseOrder> orderList = memberFormDto.getOrders();
+        List<ResponseOrder> result = new ArrayList<>();
+        orderList.forEach(v -> {
+            result.add(new ModelMapper().map(v, ResponseOrder.class));
+        });
+        System.out.println(orderList);
+        model.addAttribute("orderList", orderList);
+        return "orders/orderList";
+    }
+
 }

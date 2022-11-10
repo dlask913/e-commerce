@@ -2,9 +2,13 @@ package com.example.orderservice.controller;
 
 import com.example.orderservice.dto.OrderDto;
 import com.example.orderservice.entity.Order;
+import com.example.orderservice.messagequeue.KafkaProducer;
+import com.example.orderservice.messagequeue.OrderProducer;
 import com.example.orderservice.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +24,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderController {
     private final OrderService orderService;
+    private final KafkaProducer kafkaProducer;
+    private final OrderProducer orderProducer;
+
 
 
 //    @PostMapping("/{userId}/orders")
@@ -60,19 +67,26 @@ public class OrderController {
     @PostMapping(value = "order-service/{userId}/new")
     public String newOrderForm(@PathVariable("userId") String userId, OrderDto orderDto) {
         System.out.println("userId: "+userId);
+        orderDto.setTotalPrice(orderDto.getUnitPrice()* orderDto.getQty());
+
+        //JPA
         Order order = Order.createOrder(orderDto);
         orderService.saveOrder(order);
+//        ResponseOrder responseOrder = mapper.map(createdOrder, ResponseOrder.class);
+
+        kafkaProducer.send("example-catalog-topic",orderDto);
+
         return "redirect:/order-service/{userId}/new";
     }
 
     @GetMapping(value = "order-service/{userId}/orders")
-    public String getOrder(@PathVariable("userId") String userId, Model model) throws Exception{
+    public ResponseEntity<List<OrderDto>> getOrder(@PathVariable("userId") String userId, Model model) throws Exception{
         Iterable<Order> orderList = orderService.getOrdersByUserId(userId);
-        List<Order> result = new ArrayList<>();
+        List<OrderDto> result = new ArrayList<>();
         orderList.forEach(v -> {
-            result.add(new ModelMapper().map(v, Order.class));
+            result.add(new ModelMapper().map(v, OrderDto.class));
         });
         model.addAttribute("orderList", orderList);
-        return "orders/orderList";
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 }

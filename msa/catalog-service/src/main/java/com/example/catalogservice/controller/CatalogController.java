@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
@@ -30,7 +31,16 @@ public class CatalogController {
             result.add(new ModelMapper().map(v, CatalogDto.class));
         });
         model.addAttribute("catalogList",result);
-        return "catalog/catalogList.html";
+        return "catalog/catalogList";
     }
+
+//    @PostMapping("/catalogs")
+//    public String getOrders(Model model) {
+//        Iterable<Catalog> catalogList = catalogService.getAllCatalogs();
+//
+//        return "catalog/catalogList";
+//    }
+
+//    @PostMapping("/")
 
 }

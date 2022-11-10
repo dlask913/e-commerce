@@ -2,6 +2,7 @@ package com.example.memberservice.client;
 
 import com.example.memberservice.vo.ResponseOrder;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -12,4 +13,5 @@ public interface OrderServiceClient {
 
     @GetMapping("/order-service/{userId}/orders")
     List<ResponseOrder> getOrders(@PathVariable String userId);
+
 }

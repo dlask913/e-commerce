@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-<h1> 카탈로그 리스트 출력 </h1>
+<h1> 주문 리스트 출력 </h1>
 <table border="1">
     <thead>
     <tr>
@@ -13,15 +13,16 @@
         <td>상품아이디</td>
         <td>재고량</td>
         <td>가격</td>
+        <td>총가격</td>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="catalog, status: ${catalogList}">
+    <tr th:each="order, status: ${orderList}">
         <td th:text="${status.index}"></td>
-        <td th:text="${catalog.productId}"></td>
-        <td th:text="${catalog.qty}"></td>
-        <td th:text="${catalog.unitPrice}"></td>
-<!--        <button th:formaction="@{'/order-service/'+${orderDto.userId}+ '/new'}" type="submit">주문하기</button>-->
+        <td th:text="${order.productId}"></td>
+        <td th:text="${order.qty}"></td>
+        <td th:text="${order.unitPrice}"></td>
+        <td th:text="${order.totalPrice}"></td>
     </tr>
     </tbody>
 </table>

@@ -1,12 +1,14 @@
 package com.example.memberservice.entity;
 
 import com.example.memberservice.dto.MemberFormDto;
+import com.example.memberservice.vo.ResponseOrder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -27,6 +29,7 @@ public class Member {
     private Date createdAt;
     @Column(unique = true)
     private String userId;
+
 
     public static Member createMember(MemberFormDto memberFormDto) {
         Member member = new Member();
