@@ -13,6 +13,7 @@
         <td>상품아이디</td>
         <td>재고량</td>
         <td>가격</td>
+        <td>주문하기</td>
     </tr>
     </thead>
     <tbody>
@@ -21,7 +22,9 @@
         <td th:text="${catalog.productId}"></td>
         <td th:text="${catalog.qty}"></td>
         <td th:text="${catalog.unitPrice}"></td>
-<!--        <button th:formaction="@{'/order-service/'+${orderDto.userId}+ '/new'}" type="submit">주문하기</button>-->
+        <td>
+            <a th:href="@{/catalog-service/catalogs/{productId} (productId=${catalog.productId})}" role="button">주문하기</a>
+        </td>
     </tr>
     </tbody>
 </table>

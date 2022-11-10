@@ -14,4 +14,8 @@ public class CatalogService {
     public Iterable<Catalog> getAllCatalogs() {
         return catalogRepository.findAll();
     }
+
+    public Catalog getCatalogByProductId(String productId) {
+        return catalogRepository.findByProductId(productId);
+    }
 }

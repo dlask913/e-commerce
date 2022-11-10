@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -17,13 +18,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/catalog-service")
+@RequestMapping("/")
 @RequiredArgsConstructor
 public class CatalogController {
 
     private final CatalogService catalogService;
 
-    @GetMapping("/catalogs")
+    @GetMapping("catalog-service/catalogs")
     public String getCatalogs(Model model) {
         Iterable<Catalog> catalogList = catalogService.getAllCatalogs();
         List<CatalogDto> result = new ArrayList<>();
@@ -34,13 +35,12 @@ public class CatalogController {
         return "catalog/catalogList";
     }
 
-//    @PostMapping("/catalogs")
-//    public String getOrders(Model model) {
-//        Iterable<Catalog> catalogList = catalogService.getAllCatalogs();
+//    @GetMapping("catalog-service/catalogs/{productId}")
+//    public ResponseEntity<List<CatalogDto>> getOrders(@PathVariable("productId") String productId,Model model){
+//        Catalog catalog = catalogService.getCatalogByProductId(productId);
+//        List<CatalogDto> result = new ArrayList<>();
+//        result.add(new ModelMapper().map(catalog, CatalogDto.class));
 //
-//        return "catalog/catalogList";
+//        return ResponseEntity.status(HttpStatus.OK).body(result);
 //    }
-
-//    @PostMapping("/")
-
 }

@@ -91,6 +91,12 @@
 			<version>2.3.8</version>
 		</dependency>
 
+		<!-- Feign Client -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
+		</dependency>
+
 		<!-- Mariadb -->
 		<dependency>
 			<groupId>org.mariadb.jdbc</groupId>

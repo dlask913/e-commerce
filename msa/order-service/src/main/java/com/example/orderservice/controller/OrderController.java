@@ -25,41 +25,16 @@ import java.util.List;
 public class OrderController {
     private final OrderService orderService;
     private final KafkaProducer kafkaProducer;
-    private final OrderProducer orderProducer;
+//    private final OrderProducer orderProducer;
 
-
-
-//    @PostMapping("/{userId}/orders")
-//    public ResponseEntity<ResponseOrder> createOrder(@PathVariable("userId") String userId,
-//                                                     @RequestBody RequestOrder orderDetails) {
-//        log.info("Before add orders data");
-//        ModelMapper mapper = new ModelMapper();
-//        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-//
-//        OrderDto orderDto = mapper.map(orderDetails, OrderDto.class);
-//        orderDto.setUserId(userId);
-//        /* Jpa */
-//        OrderDto createdOrder = orderService.createOrder(orderDto);
-//        ResponseOrder responseOrder = mapper.map(createdOrder, ResponseOrder.class);
-//
-//        /* Kafka */
-////        orderDto.setOrderId(UUID.randomUUID().toString());
-////        orderDto.setTotalPrice(orderDetails.getQty()*orderDetails.getUnitPrice());
-//
-//        /* send this order to the kafka */
-//        kafkaProducer.send("example-catalog-topic",orderDto);
-////        orderProducer.send("orders",orderDto);
-//
-////        ResponseOrder responseOrder = mapper.map(orderDto, ResponseOrder.class);
-//
-//        log.info("After add orders data");
-//        return ResponseEntity.status(HttpStatus.CREATED).body(responseOrder);
-//    }
 
     @GetMapping(value = "order-service/{userId}/new")
     public String orderForm(@PathVariable("userId") String userId, Model model) {
-        OrderDto orderDto = new OrderDto();
-        orderDto.setUserId(userId);
+        List<OrderDto> orderDto = orderService.getCatalog();
+        for (OrderDto order :
+                orderDto) {
+            order.setUserId(userId);
+        }
         model.addAttribute("orderDto", orderDto);
         return "orders/orderForm";
     }
@@ -69,10 +44,8 @@ public class OrderController {
         System.out.println("userId: "+userId);
         orderDto.setTotalPrice(orderDto.getUnitPrice()* orderDto.getQty());
 
-        //JPA
         Order order = Order.createOrder(orderDto);
         orderService.saveOrder(order);
-//        ResponseOrder responseOrder = mapper.map(createdOrder, ResponseOrder.class);
 
         kafkaProducer.send("example-catalog-topic",orderDto);
 
@@ -89,4 +62,5 @@ public class OrderController {
         model.addAttribute("orderList", orderList);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
+
 }
