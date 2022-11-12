@@ -10,6 +10,6 @@ import java.util.List;
 
 @FeignClient(name = "catalog-service")
 public interface CatalogServiceClient {
-    @GetMapping(value = "/catalog-service/catalogs/{productId}",produces = "application/json")
-    List<ResponseCatalog> getOrders();
+    @GetMapping(value = "/catalog-service/catalogs")
+    List<ResponseCatalog> getCatalogs();
 }

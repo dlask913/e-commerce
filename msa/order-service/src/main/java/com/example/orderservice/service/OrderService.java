@@ -28,14 +28,28 @@ public class OrderService{
         return orderRepository.save(order);
     }
 
-    public List<OrderDto> getCatalog() {
-
-        Iterable<ResponseCatalog> catalogList = catalogServiceClient.getOrders();
+    public List<OrderDto> getCatalogs() {
+        Iterable<ResponseCatalog> catalogList = catalogServiceClient.getCatalogs();
         List<OrderDto> result = new ArrayList<>();
         catalogList.forEach(v -> {
             result.add(new ModelMapper().map(v, OrderDto.class));
         });
         return result;
+    }
+
+    public OrderDto getOrderByProductId(String productId) {
+        Iterable<ResponseCatalog> catalogList = catalogServiceClient.getCatalogs();
+        List<OrderDto> orderList = new ArrayList<>();
+        catalogList.forEach(v ->{
+            orderList.add(new ModelMapper().map(v,OrderDto.class));
+            System.out.println(v.toString());
+        });
+        for (OrderDto order: orderList) {
+            if (order.getProductId().equals(productId)) {
+                return order;
+            }
+        }
+        return null;
     }
 
 }

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<h1> 카탈로그 리스트 출력 </h1>
+<table border="1">
+    <thead>
+    <tr>
+        <td>순번</td>
+        <td>상품아이디</td>
+        <td>재고량</td>
+        <td>가격</td>
+        <td>주문하기</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="order, status: ${orderDto}">
+        <td th:text="${status.index}"></td>
+        <td th:text="${order.productId}"></td>
+        <td th:text="${order.qty}"></td>
+        <td th:text="${order.unitPrice}"></td>
+        <td>
+<!--            <a th:href="@{/order-service/orders/{productId} (productId=${order.productId})}" role="button">주문하기</a>-->
+            <a th:href="@{'/order-service/orders/'+${order.userId}+'/'+${order.productId}}" role="button">주문하기</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

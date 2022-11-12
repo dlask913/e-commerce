@@ -28,28 +28,51 @@ public class OrderController {
 //    private final OrderProducer orderProducer;
 
 
-    @GetMapping(value = "order-service/{userId}/new")
-    public String orderForm(@PathVariable("userId") String userId, Model model) {
-        List<OrderDto> orderDto = orderService.getCatalog();
+    @GetMapping(value = "order-service/orders/{userId}")
+    public String catalogList(@PathVariable("userId") String userId, Model model) {
+        List<OrderDto> orderDto = orderService.getCatalogs();
         for (OrderDto order :
                 orderDto) {
             order.setUserId(userId);
         }
         model.addAttribute("orderDto", orderDto);
+        return "orders/catalogList";
+    }
+
+//    @GetMapping(value = "order-service/{userId}/new")
+//    public String orderForm(@PathVariable("userId") String userId, Model model) {
+//        List<OrderDto> orderDto = orderService.getCatalogs();
+//        for (OrderDto order :
+//                orderDto) {
+//            order.setUserId(userId);
+//        }
+//        model.addAttribute("orderDto", orderDto);
+//        return "orders/catalogList";
+//    }
+
+    @GetMapping(value = "order-service/orders/{userId}/{productId}")
+    public String orderForm(@PathVariable("userId") String userId, @PathVariable("productId") String productId, Model model) {
+        OrderDto orderDto = orderService.getOrderByProductId(productId);
+        orderDto.setUserId(userId);
+        model.addAttribute("orderDto", orderDto);
         return "orders/orderForm";
     }
 
-    @PostMapping(value = "order-service/{userId}/new")
-    public String newOrderForm(@PathVariable("userId") String userId, OrderDto orderDto) {
-        System.out.println("userId: "+userId);
-        orderDto.setTotalPrice(orderDto.getUnitPrice()* orderDto.getQty());
+    @PostMapping(value = "order-service/orders/{userId}/{productId}")
+    public String newOrder(@PathVariable("userId") String userId,@PathVariable("productId") String productId, OrderDto orderDto) {
+        OrderDto temp = orderService.getOrderByProductId(productId);
+//        System.out.println("userId: "+userId);
+//        System.out.println(orderDto.toString());
+        temp.setUserId(userId);
+        temp.setQty(orderDto.getQty());
+        temp.setTotalPrice(temp.getUnitPrice()* temp.getQty());
 
-        Order order = Order.createOrder(orderDto);
+        Order order = Order.createOrder(temp);
         orderService.saveOrder(order);
 
         kafkaProducer.send("example-catalog-topic",orderDto);
 
-        return "redirect:/order-service/{userId}/new";
+        return "redirect:/order-service/{userId}/orders";
     }
 
     @GetMapping(value = "order-service/{userId}/orders")
