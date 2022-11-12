@@ -39,17 +39,6 @@ public class OrderController {
         return "orders/catalogList";
     }
 
-//    @GetMapping(value = "order-service/{userId}/new")
-//    public String orderForm(@PathVariable("userId") String userId, Model model) {
-//        List<OrderDto> orderDto = orderService.getCatalogs();
-//        for (OrderDto order :
-//                orderDto) {
-//            order.setUserId(userId);
-//        }
-//        model.addAttribute("orderDto", orderDto);
-//        return "orders/catalogList";
-//    }
-
     @GetMapping(value = "order-service/orders/{userId}/{productId}")
     public String orderForm(@PathVariable("userId") String userId, @PathVariable("productId") String productId, Model model) {
         OrderDto orderDto = orderService.getOrderByProductId(productId);
@@ -61,8 +50,6 @@ public class OrderController {
     @PostMapping(value = "order-service/orders/{userId}/{productId}")
     public String newOrder(@PathVariable("userId") String userId,@PathVariable("productId") String productId, OrderDto orderDto) {
         OrderDto temp = orderService.getOrderByProductId(productId);
-//        System.out.println("userId: "+userId);
-//        System.out.println(orderDto.toString());
         temp.setUserId(userId);
         temp.setQty(orderDto.getQty());
         temp.setTotalPrice(temp.getUnitPrice()* temp.getQty());
@@ -72,7 +59,7 @@ public class OrderController {
 
         kafkaProducer.send("example-catalog-topic",orderDto);
 
-        return "redirect:/order-service/{userId}/orders";
+        return "main";
     }
 
     @GetMapping(value = "order-service/{userId}/orders")

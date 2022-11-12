@@ -37,7 +37,7 @@ public class MemberController {
         Member member = Member.createMember(memberFormDto);
         memberService.saveMember(member);
         System.out.println("Id출력 "+member.getId());
-        return "redirect:/";
+        return "main";
     }
 
     @GetMapping(value = "member-service/login")
@@ -56,7 +56,7 @@ public class MemberController {
             model.addAttribute("message", "잘못된 비밀번호입니다.");
             return "members/memberLoginError";
         }
-        return "redirect:/";
+        return "main";
     }
 
     @GetMapping("member-service/{userId}")
