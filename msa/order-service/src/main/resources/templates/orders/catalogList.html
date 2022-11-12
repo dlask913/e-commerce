@@ -20,7 +20,7 @@
     <tr th:each="order, status: ${orderDto}">
         <td th:text="${status.index}"></td>
         <td th:text="${order.productId}"></td>
-        <td th:text="${order.qty}"></td>
+        <td th:text="${order.stock}"></td>
         <td th:text="${order.unitPrice}"></td>
         <td>
 <!--            <a th:href="@{/order-service/orders/{productId} (productId=${order.productId})}" role="button">주문하기</a>-->

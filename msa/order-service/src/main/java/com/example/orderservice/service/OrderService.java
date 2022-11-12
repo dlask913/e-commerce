@@ -32,7 +32,11 @@ public class OrderService{
         Iterable<ResponseCatalog> catalogList = catalogServiceClient.getCatalogs();
         List<OrderDto> result = new ArrayList<>();
         catalogList.forEach(v -> {
-            result.add(new ModelMapper().map(v, OrderDto.class));
+            OrderDto orderDto = new OrderDto();
+            orderDto.setProductId(v.getProductId());
+            orderDto.setUnitPrice(v.getUnitPrice());
+            orderDto.setStock(v.getQty());
+            result.add(orderDto);
         });
         return result;
     }
@@ -41,8 +45,13 @@ public class OrderService{
         Iterable<ResponseCatalog> catalogList = catalogServiceClient.getCatalogs();
         List<OrderDto> orderList = new ArrayList<>();
         catalogList.forEach(v ->{
-            orderList.add(new ModelMapper().map(v,OrderDto.class));
-            System.out.println(v.toString());
+            OrderDto orderDto = new OrderDto();
+            orderDto.setProductId(v.getProductId());
+            orderDto.setUnitPrice(v.getUnitPrice());
+            System.out.println("orderDto: "+orderDto.toString());
+            System.out.println("v: "+v.toString());
+            orderDto.setStock(v.getQty());
+            orderList.add(orderDto);
         });
         for (OrderDto order: orderList) {
             if (order.getProductId().equals(productId)) {

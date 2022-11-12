@@ -23,24 +23,15 @@ import java.util.List;
 public class CatalogController {
 
     private final CatalogService catalogService;
-//
-//    @GetMapping("catalog-service/catalogs")
-//    public String getCatalogs(Model model) {
-//        Iterable<Catalog> catalogList = catalogService.getAllCatalogs();
-//        List<CatalogDto> result = new ArrayList<>();
-//        catalogList.forEach(v -> {
-//            result.add(new ModelMapper().map(v, CatalogDto.class));
-//        });
-//        model.addAttribute("catalogList",result);
-//        return "catalog/catalogList";
-//    }
 
     @GetMapping("catalog-service/catalogs")
     public ResponseEntity<List<CatalogDto>> getCatalogs(Model model){
         Iterable<Catalog> catalogList = catalogService.getAllCatalogs();
         List<CatalogDto> result = new ArrayList<>();
         catalogList.forEach(v -> {
-            result.add(new ModelMapper().map(v, CatalogDto.class));
+            CatalogDto catalogDto = new ModelMapper().map(v, CatalogDto.class);
+            catalogDto.setQty(v.getStock());
+            result.add(catalogDto);
         });
 
         return ResponseEntity.status(HttpStatus.OK).body(result);

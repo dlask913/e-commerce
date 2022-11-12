@@ -25,7 +25,6 @@ import java.util.List;
 public class OrderController {
     private final OrderService orderService;
     private final KafkaProducer kafkaProducer;
-//    private final OrderProducer orderProducer;
 
 
     @GetMapping(value = "order-service/orders/{userId}")
