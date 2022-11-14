@@ -30,7 +30,6 @@ public class Member {
     @Column(unique = true)
     private String userId;
 
-
     public static Member createMember(MemberFormDto memberFormDto) {
         Member member = new Member();
         member.setUserId(memberFormDto.getUserId());

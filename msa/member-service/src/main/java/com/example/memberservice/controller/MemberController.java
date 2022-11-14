@@ -26,6 +26,11 @@ public class MemberController {
 
     private final MemberService memberService;
 
+    @GetMapping(value = "member-service/main")
+    public String memberMain(){
+        return "main";
+    }
+
     @GetMapping(value = "member-service/new")
     public String memberForm(Model model) {
         model.addAttribute("memberFormDto", new MemberFormDto());

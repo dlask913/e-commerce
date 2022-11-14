@@ -26,6 +26,10 @@ public class OrderController {
     private final OrderService orderService;
     private final KafkaProducer kafkaProducer;
 
+    @GetMapping(value = "order-service/main")
+    public String orderMain(){
+        return "main";
+    }
 
     @GetMapping(value = "order-service/orders/{userId}")
     public String catalogList(@PathVariable("userId") String userId, Model model) {
