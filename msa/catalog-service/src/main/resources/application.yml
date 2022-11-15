@@ -4,6 +4,12 @@ server:
 spring:
   application:
     name: catalog-service
+  zipkin:
+    base-url: http://127.0.0.1:9411
+    enabled: true
+  sleuth:
+    sampler:
+      probability: 1.0
   h2:
     console:
       enabled: true
@@ -34,3 +40,9 @@ spring.jpa.defer-datasource-initialization: true # 'catalog' not fount ?? ??
 logging:
   level:
     com.example.catalogservice: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, httptrace, info, metrics, prometheus

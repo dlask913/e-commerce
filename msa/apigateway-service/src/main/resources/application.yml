@@ -23,10 +23,32 @@ spring:
           uri: lb://MEMBER-SERVICE
           predicates:
             - Path=/member-service/**
+            - Method=GET,POST
+          filters:
+            - RewritePath=/member-service/(?<segment>.*), /$\{segment}
+
+        - id: member-service
+          uri: lb://MEMBER-SERVICE
+          predicates:
+            - Path=/member-service/actuator/**
+            - Method=GET,POST
+          filters:
+            - RewritePath=/member-service/(?<segment>.*), /$\{segment}
         - id: order-service
           uri: lb://ORDER-SERVICE
           predicates:
             - Path=/order-service/**
+            - Method=GET,POST
+          filters:
+            - RewritePath=/member-service/(?<segment>.*), /$\{segment}
+        - id: order-service
+          uri: lb://ORDER-SERVICE
+          predicates:
+            - Path=/order-service/actuator/**
+            - Method=GET,POST
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/order-service/(?<segment>.*), /$\{segment}
         - id: catalog-service
           uri: lb://CATALOG-SERVICE
           predicates:

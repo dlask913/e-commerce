@@ -61,7 +61,8 @@ public class MemberController {
             model.addAttribute("message", "잘못된 비밀번호입니다.");
             return "members/memberLoginError";
         }
-        return "main";
+        model.addAttribute("memberFormDto",memberFormDto);
+        return "mainRouter";
     }
 
     @GetMapping("member-service/{userId}")

@@ -51,7 +51,7 @@ public class OrderController {
     }
 
     @PostMapping(value = "order-service/orders/{userId}/{productId}")
-    public String newOrder(@PathVariable("userId") String userId,@PathVariable("productId") String productId, OrderDto orderDto) {
+    public String newOrder(@PathVariable("userId") String userId,@PathVariable("productId") String productId, OrderDto orderDto,Model model) {
         OrderDto temp = orderService.getOrderByProductId(productId);
         temp.setUserId(userId);
         temp.setQty(orderDto.getQty());
@@ -62,6 +62,7 @@ public class OrderController {
 
         kafkaProducer.send("example-catalog-topic",orderDto);
 
+        model.addAttribute("orderDto",order);
         return "main";
     }
 

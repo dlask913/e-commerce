@@ -6,11 +6,15 @@
 </head>
 <body>
 <h1>메뉴</h1>
-<div>
-    <a th:href="@{/order-service/orders}">주문하기</a>
-</div>
-<div>
-    <a th:href="@{/member-service/new}">주문 확인하기</a>
+<div class="container">
+    <form role="form" method="get" th:object="${orderDto}">
+        <div>
+            <a th:href="@{'/order-service/orders/'+${orderDto.userId}}">주문하기</a>
+        </div>
+        <div>
+            <a th:href="@{'/member-service/'+${orderDto.userId}}">주문 확인하기</a>
+        </div>
+    </form>
 </div>
 </body>
 </html>

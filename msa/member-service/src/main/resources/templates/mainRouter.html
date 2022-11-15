@@ -1,0 +1,15 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="container">
+    <h1>메뉴</h1>
+    <form role="form" method="get" th:object="${memberFormDto}">
+        <div>
+            <a th:href="@{'/order-service/orders/'+${memberFormDto.userId}}">주문하기</a>
+        </div>
+        <div>
+            <a th:href="@{'/member-service/'+${memberFormDto.userId}}">주문 확인하기</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>
