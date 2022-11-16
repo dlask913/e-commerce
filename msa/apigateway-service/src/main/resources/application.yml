@@ -26,7 +26,6 @@ spring:
             - Method=GET,POST
           filters:
             - RewritePath=/member-service/(?<segment>.*), /$\{segment}
-
         - id: member-service
           uri: lb://MEMBER-SERVICE
           predicates:
@@ -34,26 +33,35 @@ spring:
             - Method=GET,POST
           filters:
             - RewritePath=/member-service/(?<segment>.*), /$\{segment}
+
         - id: order-service
           uri: lb://ORDER-SERVICE
           predicates:
             - Path=/order-service/**
             - Method=GET,POST
           filters:
-            - RewritePath=/member-service/(?<segment>.*), /$\{segment}
+            - RewritePath=/order-service/(?<segment>.*), /$\{segment}
         - id: order-service
           uri: lb://ORDER-SERVICE
           predicates:
             - Path=/order-service/actuator/**
             - Method=GET,POST
           filters:
-            - RemoveRequestHeader=Cookie
             - RewritePath=/order-service/(?<segment>.*), /$\{segment}
+
         - id: catalog-service
           uri: lb://CATALOG-SERVICE
           predicates:
             - Path=/catalog-service/**
-
+          filters:
+            - RewritePath=/catalog-service/(?<segment>.*), /$\{segment}
+        - id: catalog-service
+          uri: lb://CATALOG-SERVICE
+          predicates:
+            - Path=/catalog-service/actuator/**
+            - Method=GET,POST
+          filters:
+            - RewritePath=/catalog-service/(?<segment>.*), /$\{segment}
 management:
   endpoints:
     web:
