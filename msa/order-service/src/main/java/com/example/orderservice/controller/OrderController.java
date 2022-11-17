@@ -26,12 +26,12 @@ public class OrderController {
     private final OrderService orderService;
     private final KafkaProducer kafkaProducer;
 
-    @GetMapping(value = "order-service/main")
+    @GetMapping(value = "main")
     public String orderMain(){
         return "main";
     }
 
-    @GetMapping(value = "order-service/orders/{userId}")
+    @GetMapping(value = "orders/{userId}")
     public String catalogList(@PathVariable("userId") String userId, Model model) {
         List<OrderDto> orderDto = orderService.getCatalogs();
         for (OrderDto order :
@@ -42,7 +42,7 @@ public class OrderController {
         return "orders/catalogList";
     }
 
-    @GetMapping(value = "order-service/orders/{userId}/{productId}")
+    @GetMapping(value = "orders/{userId}/{productId}")
     public String orderForm(@PathVariable("userId") String userId, @PathVariable("productId") String productId, Model model) {
         OrderDto orderDto = orderService.getOrderByProductId(productId);
         orderDto.setUserId(userId);
@@ -50,7 +50,7 @@ public class OrderController {
         return "orders/orderForm";
     }
 
-    @PostMapping(value = "order-service/orders/{userId}/{productId}")
+    @PostMapping(value = "orders/{userId}/{productId}")
     public String newOrder(@PathVariable("userId") String userId,@PathVariable("productId") String productId, OrderDto orderDto,Model model) {
         OrderDto temp = orderService.getOrderByProductId(productId);
         temp.setUserId(userId);
@@ -66,7 +66,7 @@ public class OrderController {
         return "main";
     }
 
-    @GetMapping(value = "order-service/{userId}/orders")
+    @GetMapping(value = "{userId}/orders")
     public ResponseEntity<List<OrderDto>> getOrder(@PathVariable("userId") String userId, Model model) throws Exception{
         Iterable<Order> orderList = orderService.getOrdersByUserId(userId);
         List<OrderDto> result = new ArrayList<>();

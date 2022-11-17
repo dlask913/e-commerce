@@ -9,3 +9,5 @@ eureka:
   client:
     register-with-eureka: true
     fetch-registry: true
+  server:
+    peer-node-read-timeout-ms: 10000

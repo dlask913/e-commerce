@@ -26,18 +26,18 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    @GetMapping(value = "member-service/main")
+    @GetMapping(value = "main")
     public String memberMain(){
         return "main";
     }
 
-    @GetMapping(value = "member-service/new")
+    @GetMapping(value = "new")
     public String memberForm(Model model) {
         model.addAttribute("memberFormDto", new MemberFormDto());
         return "members/memberForm";
     }
 
-    @PostMapping(value = "member-service/new")
+    @PostMapping(value = "new")
     public String newMember(MemberFormDto memberFormDto, Model model) {
         Member member = Member.createMember(memberFormDto);
         memberService.saveMember(member);
@@ -45,13 +45,13 @@ public class MemberController {
         return "main";
     }
 
-    @GetMapping(value = "member-service/login")
+    @GetMapping(value = "login")
     public String loginMember(Model model) {
         model.addAttribute("memberFormDto", new MemberFormDto());
         return "members/memberLoginForm";
     }
 
-    @PostMapping(value = "member-service/login")
+    @PostMapping(value = "login")
     public String loginMember(MemberFormDto memberFormDto,Model model) {
         Member member = memberService.findByUserId(memberFormDto.getUserId());
         if (member == null){
@@ -65,7 +65,7 @@ public class MemberController {
         return "mainRouter";
     }
 
-    @GetMapping("member-service/{userId}")
+    @GetMapping("{userId}")
     public String getUser(@PathVariable("userId") String userId, Model model) {
         MemberFormDto memberFormDto = memberService.getUserByUserId(userId);
         Iterable<ResponseOrder> orderList = memberFormDto.getOrders();

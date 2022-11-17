@@ -5,6 +5,7 @@ import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Data @Entity
 @Table(name = "catalog")
@@ -26,4 +27,6 @@ public class Catalog {
     @Column(nullable = false, updatable = false, insertable = false)
     @ColumnDefault(value = "CURRENT_TIMESTAMP")
     private Date createdAt;
+
+
 }

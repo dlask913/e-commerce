@@ -5,6 +5,7 @@ import com.example.catalogservice.entity.Catalog;
 import com.example.catalogservice.service.CatalogService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -19,10 +20,15 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/")
-@RequiredArgsConstructor
 public class CatalogController {
 
     private final CatalogService catalogService;
+
+    @Autowired
+    public CatalogController(CatalogService catalogService) {
+        catalogService.createCatalog();
+        this.catalogService = catalogService;
+    }
 
     @GetMapping("catalog-service/catalogs")
     public ResponseEntity<List<CatalogDto>> getCatalogs(Model model){

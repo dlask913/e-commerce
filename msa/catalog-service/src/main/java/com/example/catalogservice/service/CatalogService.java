@@ -18,4 +18,16 @@ public class CatalogService {
     public Catalog getCatalogByProductId(String productId) {
         return catalogRepository.findByProductId(productId);
     }
+
+    public void createCatalog(){
+        // product_id,product_name,stock,unit_price 'CATALOG-001','Berlin',100,1500);
+        for (int i = 1; i <= 10; i++) {
+            Catalog catalog = new Catalog();
+            catalog.setProductId("CATALOG-00"+i);
+            catalog.setStock(i*10);
+            catalog.setProductName("CATALOG_NAME_" + i);
+            catalog.setUnitPrice(i*1000);
+            catalogRepository.save(catalog);
+        }
+    }
 }
