@@ -3,7 +3,7 @@ package com.example.orderservice.controller;
 import com.example.orderservice.dto.OrderDto;
 import com.example.orderservice.entity.Order;
 import com.example.orderservice.messagequeue.KafkaProducer;
-import com.example.orderservice.messagequeue.OrderProducer;
+//import com.example.orderservice.messagequeue.OrderProducer;
 import com.example.orderservice.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;

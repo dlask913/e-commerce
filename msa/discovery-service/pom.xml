@@ -10,7 +10,8 @@
 	</parent>
 	<groupId>com.example</groupId>
 	<artifactId>discovery-service</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0</version>
+<!--	<version>0.0.1-SNAPSHOT</version>-->
 	<name>discovery-service</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
@@ -46,6 +47,13 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+
+<!--		에러발생해서 추가-->
+		<dependency>
+			<groupId>com.sun.jersey.contribs</groupId>
+			<artifactId>jersey-apache-client4</artifactId>
+			<version>1.19.4</version>
 		</dependency>
 	</dependencies>
 	<dependencyManagement>
