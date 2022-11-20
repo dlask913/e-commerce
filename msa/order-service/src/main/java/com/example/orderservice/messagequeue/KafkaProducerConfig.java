@@ -18,7 +18,7 @@ public class KafkaProducerConfig {
     @Bean
     public ProducerFactory<String, String> producerFactory() {
         Map<String, Object> properties = new HashMap<>();
-        // 172.18.0.101:9092
+        // 172.18.0.101:9092 // 172.31.32.101
         properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,"172.18.0.101:9092"); // 127.0.0.1 에서 바꿈
         properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
