@@ -18,15 +18,15 @@ import org.springframework.web.bind.annotation.*;
 public class OrderController {
     private final OrderService orderService;
 
-//    @GetMapping(value = "/orders/{userId}")
-//    public String orderForm(@PathVariable("userId") String userId, Model model){
-//        OrderDto orderDto = new OrderDto();
-//        model.addAttribute("orderDto", orderDto);
-//        return "orders/orderForm";
-//    }
+    @GetMapping(value = "/orders/{userId}")
+    public String orderForm(@PathVariable("userId") String userId, Model model){
+        OrderDto orderDto = new OrderDto();
+        model.addAttribute("orderDto", orderDto);
+        return "orders/orderForm";
+    }
 
     @PostMapping(value = "/orders/{userId}")
-    public @ResponseBody ResponseEntity order (@RequestBody OrderDto orderDto, @PathVariable(value = "userId") String userId){
+    public @ResponseBody ResponseEntity order (OrderDto orderDto, @PathVariable(value = "userId") String userId){
         Long orderId;
         try {
             orderId = orderService.order(orderDto, userId);

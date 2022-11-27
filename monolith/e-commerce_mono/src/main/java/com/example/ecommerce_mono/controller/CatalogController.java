@@ -44,15 +44,15 @@ public class CatalogController {
         return "catalog/catalogList";
     }
 
-    @GetMapping(value = "/{productName}/{userId}")
-    public String catalogDtl(Model model, @PathVariable("productName") String productName, @PathVariable("userId") String userId) {
+    @GetMapping(value = "/{productName}")
+    public String catalogDtl(Model model, @PathVariable("productName") String productName) {
         Catalog catalog = catalogService.findByProductName(productName);
         OrderDto orderDto = new OrderDto();
         orderDto.setProductId(catalog.getId());
         orderDto.setProductName(catalog.getProductName());
         orderDto.setUnitPrice(catalog.getUnitPrice());
         orderDto.setStock(catalog.getStock());
-        orderDto.setUserId(userId);
+//        orderDto.setUserId(userId);
         model.addAttribute("orderDto", orderDto);
         return "orders/orderForm";
     }
