@@ -23,7 +23,7 @@
         <td th:text="${catalog.stock}"></td>
         <td th:text="${catalog.unitPrice}"></td>
         <td>
-            <a th:href="@{'/orders/'+${catalog.productName}}" role="button">주문하기</a>
+            <a th:href="@{'/orders/'+${userId}+'/'+${catalog.productName}}" role="button">주문하기</a>
         </td>
     </tr>
     </tbody>

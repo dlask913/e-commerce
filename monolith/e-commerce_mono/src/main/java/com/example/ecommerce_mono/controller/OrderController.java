@@ -17,10 +17,17 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class OrderController {
     private final OrderService orderService;
+    private final CatalogService catalogService;
 
-    @GetMapping(value = "/orders/{userId}")
-    public String orderForm(@PathVariable("userId") String userId, Model model){
+    @GetMapping(value = "/orders/{userId}/{productName}")
+    public String orderForm(@PathVariable("userId") String userId,@PathVariable("productName") String productName, Model model){
         OrderDto orderDto = new OrderDto();
+        Catalog catalog = catalogService.findByProductName(productName);
+        orderDto.setUserId(userId);
+        orderDto.setProductName(catalog.getProductName());
+        orderDto.setUnitPrice(catalog.getUnitPrice());
+        orderDto.setStock(catalog.getStock());
+
         model.addAttribute("orderDto", orderDto);
         return "orders/orderForm";
     }

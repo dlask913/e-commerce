@@ -29,8 +29,8 @@ public class CatalogController {
         catalogService.createCatalog();
     }
 
-    @GetMapping(value = "/catalogs")
-    public String catalogList(Model model){
+    @GetMapping(value = "/catalogs/{userId}")
+    public String catalogList(@PathVariable("userId") String userId, Model model){
         Iterable<Catalog> catalogList = catalogService.getAllCatalogs();
         List<CatalogDto> result = new ArrayList<>();
         catalogList.forEach(v -> {
@@ -41,19 +41,8 @@ public class CatalogController {
             result.add(catalogDto);
         });
         model.addAttribute("catalogList", result);
+        model.addAttribute("userId", userId);
         return "catalog/catalogList";
     }
 
-    @GetMapping(value = "/{productName}")
-    public String catalogDtl(Model model, @PathVariable("productName") String productName) {
-        Catalog catalog = catalogService.findByProductName(productName);
-        OrderDto orderDto = new OrderDto();
-        orderDto.setProductId(catalog.getId());
-        orderDto.setProductName(catalog.getProductName());
-        orderDto.setUnitPrice(catalog.getUnitPrice());
-        orderDto.setStock(catalog.getStock());
-//        orderDto.setUserId(userId);
-        model.addAttribute("orderDto", orderDto);
-        return "orders/orderForm";
-    }
 }

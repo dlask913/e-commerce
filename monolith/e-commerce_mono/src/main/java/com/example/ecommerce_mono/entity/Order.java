@@ -1,5 +1,6 @@
 package com.example.ecommerce_mono.entity;
 
+import com.example.ecommerce_mono.dto.OrderDto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,20 +23,19 @@ public class Order {
 
     private Date createdAt;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL,orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<OrderCatalog> orderCatalogs = new ArrayList<>();
+    private String productName; // 상품 이름
+    private int qty; // 주문 수량
+    private int stock;
+    private int unitPrice;
 
-    public void addOrderCatalog(OrderCatalog orderCatalog) {
-        orderCatalogs.add(orderCatalog);
-        orderCatalog.setOrder(this);
-    }
 
-    public static Order createOrder(Member member, List<OrderCatalog> orderCatalogList) {
+    public static Order createOrder(Member member, OrderDto orderDto) {
         Order order = new Order();
         order.setMember(member);
-        for (OrderCatalog orderCatalog : orderCatalogList) {
-            order.addOrderCatalog(orderCatalog);
-        }
+        order.setQty(orderDto.getQty());
+        order.setStock(orderDto.getStock());
+        order.setProductName(orderDto.getProductName());
+        order.setUnitPrice(orderDto.getUnitPrice());
         order.setCreatedAt(new Date());
         return order;
     }
