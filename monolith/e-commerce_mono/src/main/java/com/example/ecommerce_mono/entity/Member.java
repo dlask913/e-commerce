@@ -16,7 +16,6 @@ public class Member {
     private String userId;
     private String userName;
     private String pwd;
-//    private String orderId;
 
     public static Member createMember(MemberFormDto memberFormDto) {
         Member member = new Member();

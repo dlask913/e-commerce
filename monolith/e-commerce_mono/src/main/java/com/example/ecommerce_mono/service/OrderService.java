@@ -22,14 +22,8 @@ public class OrderService {
 
     public Long order(OrderDto orderDto, String userId){
         Catalog catalog = catalogRepository.findByProductName(orderDto.getProductName());
-
+        catalog.setStock(catalog.getStock()-orderDto.getQty());
         Member member = memberRepository.findByUserId(userId);
-
-//        List<OrderCatalog> orderCatalogList = new ArrayList<>();
-//        OrderCatalog orderCatalog = OrderCatalog.createOrderCatalog(catalog, orderDto.getQty());
-//        orderCatalogRepository.save(orderCatalog);
-
-//        orderCatalogList.add(orderCatalog);
 
         Order order = Order.createOrder(member, orderDto);
         orderRepository.save(order);

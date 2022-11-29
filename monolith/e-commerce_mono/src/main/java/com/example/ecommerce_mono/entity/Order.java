@@ -27,6 +27,7 @@ public class Order {
     private int qty; // 주문 수량
     private int stock;
     private int unitPrice;
+    private int totalPrice;
 
 
     public static Order createOrder(Member member, OrderDto orderDto) {
@@ -36,6 +37,7 @@ public class Order {
         order.setStock(orderDto.getStock());
         order.setProductName(orderDto.getProductName());
         order.setUnitPrice(orderDto.getUnitPrice());
+        order.setTotalPrice(orderDto.getQty()* orderDto.getUnitPrice());
         order.setCreatedAt(new Date());
         return order;
     }

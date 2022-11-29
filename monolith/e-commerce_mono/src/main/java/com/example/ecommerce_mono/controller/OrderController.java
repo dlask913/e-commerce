@@ -19,7 +19,7 @@ public class OrderController {
     private final OrderService orderService;
     private final CatalogService catalogService;
 
-    @GetMapping(value = "/orders/{userId}/{productName}")
+    @GetMapping(value = "/order-service/{userId}/{productName}")
     public String orderForm(@PathVariable("userId") String userId,@PathVariable("productName") String productName, Model model){
         OrderDto orderDto = new OrderDto();
         Catalog catalog = catalogService.findByProductName(productName);
@@ -32,14 +32,14 @@ public class OrderController {
         return "orders/orderForm";
     }
 
-    @PostMapping(value = "/orders/{userId}")
-    public @ResponseBody ResponseEntity order (OrderDto orderDto, @PathVariable(value = "userId") String userId){
-        Long orderId;
-        try {
-            orderId = orderService.order(orderDto, userId);
-        } catch (Exception e) {
-            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<Long>(orderId, HttpStatus.OK);
+    @PostMapping(value = "/order-service/{userId}/{productName}")
+    public String order (OrderDto orderDto, @PathVariable(value = "userId") String userId, @PathVariable(value = "productName") String productName, Model model){
+        Catalog catalog = catalogService.findByProductName(productName);
+        orderDto.setProductName(catalog.getProductName());
+        orderDto.setUnitPrice(catalog.getUnitPrice());
+        orderDto.setStock(catalog.getStock());
+        orderService.order(orderDto, userId);
+        model.addAttribute("userId", userId);
+        return "orders/main";
     }
 }

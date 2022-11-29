@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>메뉴</h1>
+<div class="container">
+    <form role="form" method="get">
+        <div>
+            <a th:href="@{'/catalog-service/'+${userId}}">주문하기</a>
+        </div>
+        <div>
+            <a th:href="@{'/member-service/'+${userId}}">주문 확인하기</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>

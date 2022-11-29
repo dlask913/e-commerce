@@ -29,7 +29,7 @@ public class CatalogController {
         catalogService.createCatalog();
     }
 
-    @GetMapping(value = "/catalogs/{userId}")
+    @GetMapping(value = "/{userId}")
     public String catalogList(@PathVariable("userId") String userId, Model model){
         Iterable<Catalog> catalogList = catalogService.getAllCatalogs();
         List<CatalogDto> result = new ArrayList<>();

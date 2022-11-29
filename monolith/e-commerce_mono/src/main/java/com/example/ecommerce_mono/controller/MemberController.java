@@ -2,13 +2,17 @@ package com.example.ecommerce_mono.controller;
 
 import com.example.ecommerce_mono.dto.MemberFormDto;
 import com.example.ecommerce_mono.entity.Member;
+import com.example.ecommerce_mono.entity.Order;
 import com.example.ecommerce_mono.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/member-service")
@@ -45,8 +49,14 @@ public class MemberController {
             model.addAttribute("message", "잘못된 비밀번호입니다.");
             return "members/memberLoginError";
         }
-        model.addAttribute("memberFormDto",memberFormDto);
-        return "main";
+        model.addAttribute("userId",memberFormDto.getUserId());
+        return "orders/main";
     }
 
+    @GetMapping(value = "/{userId}")
+    public String getOrderList(@PathVariable("userId") String userId,Model model){
+        List<Order> orders = memberService.getOrders(userId);
+        model.addAttribute("orderList", orders);
+        return "orders/orderList";
+    }
 }

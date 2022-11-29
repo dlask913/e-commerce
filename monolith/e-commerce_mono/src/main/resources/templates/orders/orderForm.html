@@ -8,12 +8,9 @@
 <h1>주문 데이터 출력 예시</h1>
 <div class="container">
     <form role="form" method="post" th:object="${orderDto}">
-<!--        <div class="form-group">-->
-<!--            userID : <span th:text="${orderDto.userId}"></span>-->
-<!--        </div>-->
-<!--        <div class="form-group">-->
-<!--            productId : <span th:text="${orderDto.productId}"></span>-->
-<!--        </div>-->
+        <div class="form-group">
+            productName : <span th:text="${orderDto.productName}"></span>
+        </div>
         <div>
             가격 : <span th:text="${orderDto.unitPrice}"></span>
         </div>
@@ -24,7 +21,7 @@
             <label th:for="qty">수량</label>
             <input type="text" th:field="*{qty}" class="form-control" placeholder="수량을 입력해주세요">
         </div>
-        <button th:formaction="@{'/orders/'+${orderDto.userId}}" type="submit">주문하기</button>
+        <button th:formaction="@{'/order-service/'+${orderDto.userId}+'/'+${orderDto.productName}}" type="submit">주문하기</button>
     </form>
 </div>
 </body>
