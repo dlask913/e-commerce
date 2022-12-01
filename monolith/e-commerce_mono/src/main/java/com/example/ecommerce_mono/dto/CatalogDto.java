@@ -4,7 +4,6 @@ import lombok.Data;
 
 @Data
 public class CatalogDto {
-
     private String productName;
     private int stock;
     private int unitPrice;

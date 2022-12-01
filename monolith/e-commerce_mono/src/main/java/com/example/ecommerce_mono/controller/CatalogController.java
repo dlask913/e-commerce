@@ -44,5 +44,4 @@ public class CatalogController {
         model.addAttribute("userId", userId);
         return "catalog/catalogList";
     }
-
 }

@@ -35,6 +35,10 @@ public class OrderController {
     @PostMapping(value = "/order-service/{userId}/{productName}")
     public String order (OrderDto orderDto, @PathVariable(value = "userId") String userId, @PathVariable(value = "productName") String productName, Model model){
         Catalog catalog = catalogService.findByProductName(productName);
+        if (catalog.getStock()-orderDto.getQty()<0){
+            model.addAttribute("message", "재고가 부족합니다.");
+            return "orders/orderError";
+        }
         orderDto.setProductName(catalog.getProductName());
         orderDto.setUnitPrice(catalog.getUnitPrice());
         orderDto.setStock(catalog.getStock());

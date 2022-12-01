@@ -22,7 +22,9 @@ public class OrderService {
 
     public Long order(OrderDto orderDto, String userId){
         Catalog catalog = catalogRepository.findByProductName(orderDto.getProductName());
-        catalog.setStock(catalog.getStock()-orderDto.getQty());
+
+        catalog.setStock(catalog.getStock() - orderDto.getQty());
+
         Member member = memberRepository.findByUserId(userId);
 
         Order order = Order.createOrder(member, orderDto);

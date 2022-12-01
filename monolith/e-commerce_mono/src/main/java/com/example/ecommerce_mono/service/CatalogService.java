@@ -23,7 +23,6 @@ public class CatalogService {
     }
 
     public void createCatalog(){
-        // product_id,product_name,stock,unit_price 'CATALOG-001','Berlin',100,1500);
         for (int i = 1; i <= 10; i++) {
             Catalog catalog = new Catalog();
             catalog.setCreatedAt(new Date());
